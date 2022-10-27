@@ -148,19 +148,12 @@ namespace DataBase
                 Console.WriteLine($"Игроку присвоен {level}й уровень.");
             }
 
-            int id = CreatePlayerId();
+            int id = CreatePlayerId();            
 
-            Player newPlayer = new Player(id, userName, level, false);
-
-            AddRecord(newPlayer);
-        }
-
-        private void AddRecord(Player player)
-        {
-            _players.Add(player);
+            _players.Add(new Player(id, userName, level, false));
 
             ShowSystemMessage("Запись успешно добавлена");
-        }
+        }        
 
         private void BanPlayer()
         {
