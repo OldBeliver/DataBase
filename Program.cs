@@ -170,7 +170,7 @@ namespace DataBase
                 return;
             }
 
-            if (TryGetIndex(positionNumber, _players, out int index) == false)
+            if (TryGetIndex(positionNumber, _players.Count, out int index) == false)
             {
                 ShowSystemMessage($"Ошибка ввода данных");
                 return;
@@ -187,7 +187,7 @@ namespace DataBase
                 return;
             }
 
-            if(TryGetIndex(positionNumber, _players, out int index)== false)
+            if(TryGetIndex(positionNumber, _players.Count, out int index)== false)
             {
                 ShowSystemMessage($"Ошибка ввода данных");
                 return;
@@ -204,7 +204,7 @@ namespace DataBase
                 return;
             }
 
-            if(TryGetIndex(positionNumber, _players, out int index) == false)
+            if(TryGetIndex(positionNumber, _players.Count, out int index) == false)
             {
                 ShowSystemMessage($"Ошибка ввода данных");
                 return;
@@ -239,13 +239,13 @@ namespace DataBase
             return int.TryParse(numberByText, out number);
         }
 
-        private bool TryGetIndex(int number, List<Player> players, out int index)
+        private bool TryGetIndex(int number, int upperRange, out int index)
         {
             index = 0;
 
             bool isCorrectRange = false;
 
-            if (0 < number && number <= players.Count)
+            if (0 < number && number <= upperRange)
             {
                 index = number - 1;
 
