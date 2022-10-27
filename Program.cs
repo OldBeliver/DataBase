@@ -10,8 +10,8 @@ namespace DataBase
     {
         static void Main(string[] args)
         {
-            DataBase dataBase = new DataBase();
-            dataBase.ShowMenu();
+            Database dataBase = new Database();
+            dataBase.Work();
         }
     }
 
@@ -20,56 +20,56 @@ namespace DataBase
         private int _id;
         private string _niсkname;
         private int _level;
-        private bool _isBan;
+        private bool _isBaned;
 
-        public Player(int id, string username, int level, bool isBan)
+        public Player(int id, string username, int level, bool isBaned)
         {
             _id = id;
             _niсkname = username;
             _level = level;
-            _isBan = isBan;
+            _isBaned = isBaned;
         }        
 
         public void Ban()
         {
-            _isBan = true;
+            _isBaned = true;
         }
 
         public void UnBan()
         {
-            _isBan = false;
+            _isBaned = false;
         }
 
         public void ShowInfo()
         {
-            string status = ShowStatus(_isBan);
+            string status = ConvertBoolStatusToText(_isBaned);
 
             Console.WriteLine($"ID {_id}. {_niсkname}, {_level} уровень, статус: {status}");
         }
 
-        private string ShowStatus(bool status)
+        private string ConvertBoolStatusToText(bool isBaned)
         {
             string statusInfo = "аткивен";
 
-            if (status)
+            if (isBaned)
                 statusInfo = "забанен";
 
             return statusInfo;
         }
     }
 
-    class DataBase
+    class Database
     {
-        private int _id;
+        private int _playerId;
         private List<Player> _players;
 
-        public DataBase()
+        public Database()
         {
-            _id = 1;
+            _playerId = 1;
             _players = new List<Player>();
         }
 
-        public void ShowMenu()
+        public void Work()
         {
             const string CommandShowPlayers = "1";
             const string CommandAddPlayer = "2";
@@ -148,7 +148,7 @@ namespace DataBase
                 Console.WriteLine($"Игроку присвоен {level}й уровень.");
             }
 
-            int id = CreateId();
+            int id = CreatePlayerId();
 
             Player newPlayer = new Player(id, userName, level, false);
 
@@ -213,7 +213,7 @@ namespace DataBase
             _players.RemoveAt(index);
         }
 
-        private int CreateId()
+        private int CreatePlayerId()
         {
             // 1й вариант получения ID
             // return _id++;
@@ -228,7 +228,7 @@ namespace DataBase
             // Guid guid = Guid.NewGuid();
             // string textId = guid.ToString();
 
-            return _id++;
+            return _playerId++;
         }
 
         private bool TryGetNumber(string message, out int number)
@@ -258,10 +258,10 @@ namespace DataBase
         private void DrawFrame(string text)
         {
             char horizontalSymbol = '-';
-            char VerticalSymbol = '|';
+            char verticalSymbol = '|';
 
             string frame = "";
-            string frameMessage = $"{VerticalSymbol} {text} {VerticalSymbol}";
+            string frameMessage = $"{verticalSymbol} {text} {verticalSymbol}";
 
             for (int i = 0; i < frameMessage.Length; i++)
             {
