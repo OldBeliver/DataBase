@@ -159,53 +159,44 @@ namespace DataBase
 
         private void BanPlayer()
         {
-            if (TryGetNumber("Введите номер для блокировки игрока", out int positionNumber) == false)
+            if (TryGetPlayer("Введите порядковый номер игрока для блокировки:", out Player player))
             {
-                ShowSystemMessage($"Ошибка ввода данных");
-                return;
-            }
+                player.Ban();
 
-            if (TryGetIndex(positionNumber, out int index) == false)
+                ShowSystemMessage("Игрок успешно заблокирован");
+            }
+            else
             {
-                ShowSystemMessage($"Ошибка ввода данных");
-                return;
+                ShowSystemMessage("Ошибка блокировки игрока");
             }
-
-            _players[index].Ban();
         }
 
         private void UnBanPlayer()
-        {
-            if (TryGetNumber("Введите номер для разблокировки игрока", out int positionNumber) == false)
+        {            
+            if (TryGetPlayer("Введите порядковый номер игрока для разблокировки:", out Player player))
             {
-                ShowSystemMessage($"Ошибка ввода данных");
-                return;
-            }
+                player.UnBan();
 
-            if (TryGetIndex(positionNumber, out int index) == false)
+                ShowSystemMessage("Игрок успешно разблокирован");
+            }
+            else
             {
-                ShowSystemMessage($"Ошибка ввода данных");
-                return;
+                ShowSystemMessage("Ошибка разблокировки игрока");
             }
-
-            _players[index].UnBan();
         }
 
         private void DeletePlayer()
-        {
-            if (TryGetNumber("Введите номер игрока для удаления:", out int positionNumber) == false)
+        {            
+            if(TryGetPlayer("Введите номер игрока для удаления:", out Player player))
             {
-                ShowSystemMessage($"Ошибка ввода данных");
-                return;
-            }
+                _players.Remove(player);
 
-            if (TryGetIndex(positionNumber, out int index) == false)
+                ShowSystemMessage("Игрок успешно удален");
+            }
+            else
             {
-                ShowSystemMessage($"Ошибка ввода данных");
-                return;
+                ShowSystemMessage("Ошибка удаления игрока");
             }
-
-            _players.RemoveAt(index);
         }
 
         private int CreatePlayerId()
@@ -224,6 +215,27 @@ namespace DataBase
             // string textId = guid.ToString();
 
             return _playerId++;
+        }
+
+        private bool TryGetPlayer(string message, out Player player)
+        {
+            player = null;
+            int index = 0;
+            bool isFindPlayer = false;            
+            
+            Console.WriteLine(message);
+            string numberByText = Console.ReadLine();
+
+            int.TryParse(numberByText, out int number);
+
+            if (0 < number && number <= _players.Count)
+            {
+                index = number - 1;
+                player = _players[index];
+                isFindPlayer = true;
+            }
+
+            return isFindPlayer;
         }
 
         private bool TryGetNumber(string message, out int number)
