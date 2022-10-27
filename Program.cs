@@ -28,7 +28,7 @@ namespace DataBase
             _niсkname = username;
             _level = level;
             _isBaned = isBaned;
-        }        
+        }
 
         public void Ban()
         {
@@ -138,7 +138,7 @@ namespace DataBase
         private void AddPlayer()
         {
             Console.WriteLine($"введите имя игрока:");
-            string userName = Console.ReadLine();            
+            string userName = Console.ReadLine();
 
             if (TryGetNumber($"введите уровень игрока:", out int level) == false)
             {
@@ -164,13 +164,13 @@ namespace DataBase
 
         private void BanPlayer()
         {
-            if(TryGetNumber("Введите номер для блокировки игрока", out int positionNumber)== false)
+            if (TryGetNumber("Введите номер для блокировки игрока", out int positionNumber) == false)
             {
                 ShowSystemMessage($"Ошибка ввода данных");
                 return;
             }
 
-            if (TryGetIndex(positionNumber, _players.Count, out int index) == false)
+            if (TryGetIndex(positionNumber, out int index) == false)
             {
                 ShowSystemMessage($"Ошибка ввода данных");
                 return;
@@ -181,13 +181,13 @@ namespace DataBase
 
         private void UnBanPlayer()
         {
-            if(TryGetNumber("Введите номер для разблокировки игрока", out int positionNumber) == false)
+            if (TryGetNumber("Введите номер для разблокировки игрока", out int positionNumber) == false)
             {
                 ShowSystemMessage($"Ошибка ввода данных");
                 return;
             }
 
-            if(TryGetIndex(positionNumber, _players.Count, out int index)== false)
+            if (TryGetIndex(positionNumber, out int index) == false)
             {
                 ShowSystemMessage($"Ошибка ввода данных");
                 return;
@@ -198,13 +198,13 @@ namespace DataBase
 
         private void DeletePlayer()
         {
-            if(TryGetNumber("Введите номер игрока для удаления:", out int positionNumber) == false)
+            if (TryGetNumber("Введите номер игрока для удаления:", out int positionNumber) == false)
             {
                 ShowSystemMessage($"Ошибка ввода данных");
                 return;
             }
 
-            if(TryGetIndex(positionNumber, _players.Count, out int index) == false)
+            if (TryGetIndex(positionNumber, out int index) == false)
             {
                 ShowSystemMessage($"Ошибка ввода данных");
                 return;
@@ -239,13 +239,13 @@ namespace DataBase
             return int.TryParse(numberByText, out number);
         }
 
-        private bool TryGetIndex(int number, int upperRange, out int index)
+        private bool TryGetIndex(int number, out int index)
         {
             index = 0;
 
             bool isCorrectRange = false;
 
-            if (0 < number && number <= upperRange)
+            if (0 < number && number <= _players.Count)
             {
                 index = number - 1;
 
