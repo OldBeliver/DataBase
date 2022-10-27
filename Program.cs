@@ -137,23 +137,25 @@ namespace DataBase
 
         private void AddPlayer()
         {
+            int id = CreatePlayerId();
+
             Console.WriteLine($"введите имя игрока:");
             string userName = Console.ReadLine();
 
-            if (TryGetNumber($"введите уровень игрока:", out int level) == false)
+            Console.WriteLine($"Введите уровень игрока");
+            int.TryParse(Console.ReadLine(), out int level);
+
+            if (level < 1)
             {
                 level = 1;
-
                 ShowSystemMessage($"Ошибка ввода данных.");
                 Console.WriteLine($"Игроку присвоен {level}й уровень.");
             }
 
-            int id = CreatePlayerId();            
-
             _players.Add(new Player(id, userName, level, false));
 
             ShowSystemMessage("Запись успешно добавлена");
-        }        
+        }
 
         private void BanPlayer()
         {
