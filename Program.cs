@@ -10,8 +10,8 @@ namespace DataBase
     {
         static void Main(string[] args)
         {
-            Database dataBase = new Database();
-            dataBase.Work();
+            Database database = new Database();
+            database.Work();
         }
     }
 
@@ -42,30 +42,30 @@ namespace DataBase
 
         public void ShowInfo()
         {
-            string status = ConvertBoolStatusToText(_isBaned);
+            string status = ConvertIsBannedToText(_isBaned);
 
             Console.WriteLine($"ID {_id}. {_niсkname}, {_level} уровень, статус: {status}");
         }
 
-        private string ConvertBoolStatusToText(bool isBaned)
+        private string ConvertIsBannedToText(bool isBaned)
         {
-            string statusInfo = "аткивен";
+            string convertedIsBannedToText = "аткивен";
 
             if (isBaned)
-                statusInfo = "забанен";
+                convertedIsBannedToText = "забанен";
 
-            return statusInfo;
+            return convertedIsBannedToText;
         }
     }
 
     class Database
     {
-        private int _playerId;
+        private int _lastPlayerId;
         private List<Player> _players;
 
         public Database()
         {
-            _playerId = 1;
+            _lastPlayerId = 1;
             _players = new List<Player>();
         }
 
@@ -214,7 +214,7 @@ namespace DataBase
             // Guid guid = Guid.NewGuid();
             // string textId = guid.ToString();
 
-            return _playerId++;
+            return _lastPlayerId++;
         }
 
         private bool TryGetPlayer(string message, out Player player)
@@ -228,6 +228,8 @@ namespace DataBase
 
             int.TryParse(numberByText, out int number);
 
+
+            //беда - проверить есть ли такой индекс, а не диапазон
             if (0 < number && number <= _players.Count)
             {
                 index = number - 1;
