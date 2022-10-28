@@ -47,7 +47,7 @@ namespace DataBase
 
         private string ConvertIsBannedToText(bool isBaned)
         {
-            string convertedIsBannedToText = "аткивен";
+            string convertedIsBannedToText = "активен";
 
             if (isBaned)
                 convertedIsBannedToText = "забанен";
@@ -162,6 +162,7 @@ namespace DataBase
                 player.Ban();
 
                 ShowSystemMessage("Игрок успешно заблокирован");
+                player.ShowInfo();
             }
             else
             {
@@ -176,6 +177,7 @@ namespace DataBase
                 player.UnBan();
 
                 ShowSystemMessage("Игрок успешно разблокирован");
+                player.ShowInfo();
             }
             else
             {
@@ -190,6 +192,7 @@ namespace DataBase
                 _players.Remove(player);
 
                 ShowSystemMessage("Игрок успешно удален");
+                player.ShowInfo();
             }
             else
             {
