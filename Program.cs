@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBase
 {
@@ -16,19 +13,20 @@ namespace DataBase
     }
 
     class Player
-    {
-        private int _id;
+    {        
         private string _niсkname;
         private int _level;
         private bool _isBaned;
 
         public Player(int id, string username, int level, bool isBaned)
         {
-            _id = id;
+            Id = id;
             _niсkname = username;
             _level = level;
             _isBaned = isBaned;
         }
+
+        public int Id { get; private set; }
 
         public void Ban()
         {
@@ -44,7 +42,7 @@ namespace DataBase
         {
             string status = ConvertIsBannedToText(_isBaned);
 
-            Console.WriteLine($"ID {_id}. {_niсkname}, {_level} уровень, статус: {status}");
+            Console.WriteLine($"ID {Id}. {_niсkname}, {_level} уровень, статус: {status}");
         }
 
         private string ConvertIsBannedToText(bool isBaned)
@@ -172,7 +170,7 @@ namespace DataBase
         }
 
         private void UnBanPlayer()
-        {            
+        {
             if (TryGetPlayer("Введите порядковый номер игрока для разблокировки:", out Player player))
             {
                 player.UnBan();
@@ -186,8 +184,8 @@ namespace DataBase
         }
 
         private void DeletePlayer()
-        {            
-            if(TryGetPlayer("Введите номер игрока для удаления:", out Player player))
+        {
+            if (TryGetPlayer("Введите номер игрока для удаления:", out Player player))
             {
                 _players.Remove(player);
 
@@ -197,31 +195,30 @@ namespace DataBase
             {
                 ShowSystemMessage("Ошибка удаления игрока");
             }
-        }        
+        }
 
         private bool TryGetPlayer(string message, out Player player)
         {
             player = null;
-            int index = 0;
-            bool isFindPlayer = false;            
-            
+            bool isFindPlayer = false;
+
             Console.WriteLine(message);
             string numberByText = Console.ReadLine();
 
             int.TryParse(numberByText, out int number);
 
-
-            //беда - проверить есть ли такой индекс, а не диапазон
-            if (0 < number && number <= _players.Count)
+            for (int i = 0; i < _players.Count; i++)
             {
-                index = number - 1;
-                player = _players[index];
-                isFindPlayer = true;
+                if (_players[i].Id == number)
+                {
+                    player = _players[i];
+                    isFindPlayer = true;
+                }
             }
 
             return isFindPlayer;
         }
-        
+
         private void DrawFrame(string text)
         {
             char horizontalSymbol = '-';
