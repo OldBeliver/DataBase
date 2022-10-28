@@ -65,7 +65,7 @@ namespace DataBase
 
         public Database()
         {
-            _lastPlayerId = 1;
+            _lastPlayerId = 0;
             _players = new List<Player>();
         }
 
@@ -137,7 +137,7 @@ namespace DataBase
 
         private void AddPlayer()
         {
-            int id = CreatePlayerId();
+            int id = ++_lastPlayerId;
 
             Console.WriteLine($"введите имя игрока:");
             string userName = Console.ReadLine();
@@ -197,25 +197,7 @@ namespace DataBase
             {
                 ShowSystemMessage("Ошибка удаления игрока");
             }
-        }
-
-        private int CreatePlayerId()
-        {
-            // 1й вариант получения ID
-            // return _id++;
-
-            // 2й вариант получения ID через GetHashCode
-            // private int CreateId(string userName, int level)
-            // string textForId = $"{userName}{level}";
-            // id = textForId.GetHashCode();
-
-            // 3й вариант получения ID через Guid
-            // у _id должен быть тип переменной string 
-            // Guid guid = Guid.NewGuid();
-            // string textId = guid.ToString();
-
-            return _lastPlayerId++;
-        }
+        }        
 
         private bool TryGetPlayer(string message, out Player player)
         {
@@ -239,31 +221,7 @@ namespace DataBase
 
             return isFindPlayer;
         }
-
-        private bool TryGetNumber(string message, out int number)
-        {
-            Console.WriteLine(message);
-            string numberByText = Console.ReadLine();
-
-            return int.TryParse(numberByText, out number);
-        }
-
-        private bool TryGetIndex(int number, out int index)
-        {
-            index = 0;
-
-            bool isCorrectRange = false;
-
-            if (0 < number && number <= _players.Count)
-            {
-                index = number - 1;
-
-                isCorrectRange = true;
-            }
-
-            return isCorrectRange;
-        }
-
+        
         private void DrawFrame(string text)
         {
             char horizontalSymbol = '-';
