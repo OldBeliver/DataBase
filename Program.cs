@@ -40,19 +40,19 @@ namespace DataBase
 
         public void ShowInfo()
         {
-            string status = ConvertIsBannedToText(_isBaned);
+            string status = ConvertBannedToText(_isBaned);
 
             Console.WriteLine($"ID {Id}. {_niсkname}, {_level} уровень, статус: {status}");
         }
 
-        private string ConvertIsBannedToText(bool isBaned)
+        private string ConvertBannedToText(bool isBaned)
         {
-            string convertedIsBannedToText = "активен";
+            string text = "активен";
 
             if (isBaned)
-                convertedIsBannedToText = "забанен";
+                text = "забанен";
 
-            return convertedIsBannedToText;
+            return text;
         }
     }
 
